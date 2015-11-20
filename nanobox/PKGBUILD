@@ -1,5 +1,5 @@
 # Maintainer: kumpelblase2
-pkgname=nanobox
+pkgname=nanobox-bin
 pkgver=0.15
 pkgrel=1
 pkgdesc='Local Development Done Right'
@@ -14,7 +14,6 @@ md5sums=('ea7509606afc4f2c5aa103c2e76dc4f6'
 
 package() {
   cd "$srcdir"
-  install -dm755 "$pkgdir/usr/bin"
-  install -Dm755 $pkgname "$pkgdir/usr/bin/$pkgname"
+  install -Dm755 nanobox "$pkgdir/usr/bin/nanobox"
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
