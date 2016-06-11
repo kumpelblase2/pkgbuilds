@@ -1,0 +1,35 @@
+# Maintainer: Tim Hagemann
+
+_pkgname=proxtop
+pkgname=${_pkgname}-git
+pkgver=r377.b36e601
+pkgrel=1
+pkgdesc='Desktop client for proxer.me'
+url="https://github.com/kumpelblase2/proxtop.git"
+license=('MIT')
+arch=('x86_64')
+depends=('libnotify')
+makedepends=('nodejs' 'npm' 'make' 'bower' 'git')
+provides=("${_pkgname}")
+conflicts=("${_pkgname}")
+source=("proxtop::git+$url")
+md5sums=('SKIP')
+
+pkgver() {
+    cd "$_pkgname"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+    cd "$_pkgname"
+    make clean
+    npm install --only=dev
+    bower install --allow-root
+    make package-pkg
+}
+
+package() {
+    cd "$_pkgname"
+    make DESTDIR="$pkgdir/usr/" install
+    install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
