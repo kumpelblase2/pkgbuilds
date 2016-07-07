@@ -1,7 +1,7 @@
 # Maintainer: Tim Hagemann
 
 pkgname=proxtop
-pkgver=0.4.0
+pkgver=0.4.1
 _pkgver=$pkgver-alpha5
 pkgrel=1
 pkgdesc='Desktop client for proxer.me'
@@ -12,7 +12,7 @@ depends=('libnotify')
 provides=("${pkgname}")
 conflicts=("${pkgname}")
 source=("https://github.com/kumpelblase2/proxtop/releases/download/v$_pkgver/proxtop_${pkgver}_amd64.deb")
-md5sums=('23ffdef261bb0e7399a16f7b26e706b0')
+sha1sums=('593e7d9319d3679c653e470fe7d680f146deaa02')
 
 package() {
 	tar -zxf data.tar.gz -C "${pkgdir}"

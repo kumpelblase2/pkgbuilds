@@ -2,7 +2,7 @@
 
 _pkgname=proxtop
 pkgname=${_pkgname}-git
-pkgver=r377.b36e601
+pkgver=r421.b051441
 pkgrel=1
 pkgdesc='Desktop client for proxer.me'
 url="https://github.com/kumpelblase2/proxtop.git"
