@@ -1,0 +1,21 @@
+[Unit]
+Description=Relica client daemon
+After=network.target
+After=systemd-user-sessions.service
+After=network-online.target
+StartLimitBurst=5
+StartLimitIntervalSec=30s
+
+[Service]
+ExecStart="/usr/bin/relica" -config "/etc/relica/config.toml" daemon
+WorkingDirectory=/usr/bin
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=relica
+Restart=always
+RestartSec=5
+PrivateTmp=true
+Environment=DISPLAY=:0
+
+[Install]
+WantedBy=default.target

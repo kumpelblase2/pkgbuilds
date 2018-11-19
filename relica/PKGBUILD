@@ -1,0 +1,31 @@
+# Maintainer: kumpelblase2
+pkgname=relica
+pkgver=1.0.1
+pkgrel=1
+pkgdesc='Automated Backup Application'
+arch=('x86_64')
+url='https://relicabackup.com/'
+license=('custom')
+depends=('restic' 'rclone')
+source=("https://relica-releases.s3.wasabisys.com/dist/v$pkgver/relica_v${pkgver}_linux_amd64.tar.gz"
+	"https://relica-releases.s3.wasabisys.com/dist/v$pkgver/relica_v${pkgver}_linux_amd64.tar.gz.asc"
+	"relica.service")
+validpgpkeys=('75B35F8189EC5932D717C73CD8276B3451CAD12C')
+sha256sums=('10027458f2dd19c1536edf036a77e2b65fe3bbe629c47cd150b41290e341aa9f'
+            'SKIP'
+            '6a9841e12c47bde9d992b59caec9076ffc33833fd48db9ec31584edf3a19b7af')
+
+package() {
+  cd "$srcdir"
+  install -Dm644 $pkgname.service "$pkgdir/usr/lib/systemd/user/$pkgname.service"
+  cd "$pkgname"
+  install -Dm644 EULA.txt "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  mkdir -p "$pkgdir/opt/$pkgname"
+  cp -r webui "$pkgdir/opt/$pkgname"
+  install -Dm644 relica.png "$pkgdir/opt/$pkgname/relica.png"
+  install -Dm644 config.toml "$pkgdir/etc/$pkgname/config.toml"
+  sed -i "s|^web_root.*|web_root = \"/opt/$pkgname/webui\"|" "$pkgdir/etc/$pkgname/config.toml"
+  sed -i "s/^upgrade_policy.*/upgrade_policy = \"disabled\"/" "$pkgdir/etc/$pkgname/config.toml"
+  install -Dm644 bin/$pkgname "$pkgdir/usr/bin/$pkgname"
+  chmod 755 "$pkgdir/usr/bin/$pkgname"
+}
